@@ -1,0 +1,128 @@
+body {
+  font-family: sans-serif;
+  margin: 20px;
+}
+
+h1,
+h2 {
+  text-align: center;
+}
+
+/* テーブルのスタイル */
+#budget-book-table {
+  width: 80%; /* 幅を調整 */
+  margin: 20px auto; /* 中央寄せ */
+  border-collapse: collapse; /* ボーダーを重ねる */
+  border: 1px solid #ccc; /* 外枠 */
+}
+
+#budget-book-table th,
+#budget-book-table td {
+  border: 1px solid #ccc; /* セルの罫線 */
+  padding: 10px; /* セル内の余白 */
+  text-align: center; /* 中央揃え */
+}
+
+#budget-book-table th {
+  background-color: #f2f2f2; /* ヘッダーの背景色 */
+}
+
+/* ボタンコンテナ */
+.button-container {
+  text-align: center; /* ボタンを中央寄せ */
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+/* ボタン共通スタイル */
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px; /* 角丸 */
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 0 10px; /* ボタン間の余白 */
+}
+
+/* 追加ボタン */
+.btn-add {
+  background-color: #3498db; /* 青色系 */
+}
+.btn-add:hover {
+  background-color: #2980b9;
+}
+
+/* 保存ボタン */
+.btn-save {
+  background-color: #2ecc71; /* 緑色系 */
+}
+.btn-save:hover {
+  background-color: #27ae60;
+}
+
+/* フォームコンテナ */
+.form-container {
+  width: 80%; /* 幅を調整 */
+  max-width: 400px; /* 最大幅 */
+  margin: 20px auto; /* 中央寄せ */
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 影 */
+}
+
+/* フォームグループ */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block; /* ラベルをブロック要素に */
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input[type="date"],
+.form-group input[type="number"] {
+  width: calc(100% - 22px); /* paddingを考慮 */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-group input[type="radio"] {
+  margin-right: 5px;
+}
+.form-group label[for="income"],
+.form-group label[for="expense"] {
+  display: inline-block; /* ラジオボタンのラベルをインラインに */
+  margin-right: 15px;
+  font-weight: normal;
+}
+
+/* フォーム内ボタン */
+.form-buttons {
+  text-align: right; /* ボタンを右寄せ */
+  margin-top: 20px;
+}
+
+.btn-submit {
+  background-color: #007bff;
+}
+.btn-submit:hover {
+  background-color: #0056b3;
+}
+
+.btn-cancel {
+  background-color: #dc3545;
+}
+.btn-cancel:hover {
+  background-color: #c82333;
+}
+
+/* 非表示用クラス */
+.hidden {
+  display: none;
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>家計簿アプリ</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="main.js"></script>
+  </head>
+  <body>
+    <table id="budget-book-table">
+      <thead>
+        <tr>
+          <th>日付</th>
+          <th>収支</th>
+          <th>金額</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="button-container">
+      <button id="add-button" class="btn btn-add">追加</button>
+      <button id="save-button" class="btn btn-save">保存</button>
+    </div>
+
+    <div id="input-form" class="form-container hidden">
+      <h2>新規入力</h2>
+      <form id="budget-book-form">
+        <div class="form-group">
+          <label for="date">日付:</label>
+          <input type="date" id="date" required />
+        </div>
+        <div class="form-group">
+          <label>収支:</label>
+          <input type="radio" id="income" name="type" value="収入" checked />
+          <label for="income">収入</label>
+          <input type="radio" id="expense" name="type" value="支出" />
+          <label for="expense">支出</label>
+        </div>
+        <div class="form-group">
+          <label for="amount">金額:</label>
+          <input type="number" id="amount" min="0" required />
+        </div>
+        <div class="form-buttons">
+          <button type="submit" class="btn btn-submit">登録</button>
+          <button type="button" id="cancel-button" class="btn btn-cancel">
+            キャンセル
+          </button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
