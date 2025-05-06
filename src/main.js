@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const addButton = document.getElementById("add-button");
   const inputForm = document.getElementById("input-form");
   const BudgetBookForm = document.getElementById("budget-book-form");
@@ -8,6 +8,67 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // グローバルなエントリ配列を用意
   let BudgetBookEntries = [];
+
+  // 自動で過去のデータを読み込む処理を追加
+  const { invoke } = window.__TAURI__.core;
+  let userPassword = "";
+
+  try {
+    const isSet = await invoke("is_password_set");
+    if (!isSet) {
+      userPassword = prompt(
+        "パスワードが設定されていません。新しいパスワードを設定してください:"
+      );
+      if (userPassword) {
+        const res = await invoke("set_password", { password: userPassword });
+        alert(res);
+      } else {
+        alert("パスワードが必要です。");
+        return;
+      }
+    } else {
+      let valid = false;
+      while (!valid) {
+        userPassword = prompt("パスワードを入力してください:");
+        valid = await invoke("verify_password", { password: userPassword });
+        if (!valid) {
+          alert("パスワードが正しくありません。再度入力してください。");
+        }
+      }
+    }
+  } catch (error) {
+    console.error("パスワード処理エラー:", error);
+    return;
+  }
+
+  // Store password globally for use when saving data
+  window.userPassword = userPassword;
+
+  // Load and restore data using the valid password
+  try {
+    const entries = await invoke("load_data", {
+      password: window.userPassword,
+    });
+    entries.forEach((entry) => {
+      const newRow = tableBody.insertRow(); // 新しい行を追加
+      const cell1 = newRow.insertCell(); // 日付セル
+      const cell2 = newRow.insertCell(); // 収支セル
+      const cell3 = newRow.insertCell(); // 金額セル
+      cell1.textContent = entry.date;
+      cell2.textContent = entry.type;
+      cell3.textContent = entry.amount;
+      cell3.style.textAlign = "right"; // 金額は右寄せ
+
+      // グローバル配列にも追加
+      BudgetBookEntries.push({
+        date: entry.date,
+        type: entry.type,
+        amount: parseInt(entry.amount, 10), // changed from parseFloat
+      });
+    });
+  } catch (error) {
+    console.error("データ復元失敗:", error);
+  }
 
   // 保存ボタンのリスナー
   saveButton.addEventListener("click", async () => {
@@ -27,9 +88,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       // Rust側の save_data 関数を呼び出す
-      const { invoke } = window.__TAURI__.core;
       const result = await invoke("save_data", {
         data: entries,
+        password: window.userPassword,
       });
       alert(result); // 保存完了メッセージを表示
     } catch (error) {
@@ -84,7 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
     BudgetBookEntries.push({
       date: date,
       type: type,
-      amount: parseFloat(amount),
+      amount: parseInt(amount, 10), // changed from parseFloat
     });
 
     // -----------------------------------------------------------
