@@ -1,113 +1,260 @@
-body {
-  font-family: sans-serif;
-  margin: 20px;
+/* Root variables for theming */
+/* テーマ設定のためのルート変数 */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --table-bg-color: #f9f9f9;
+  --table-border-color: #ccc;
+  --table-header-bg-color: #f2f2f2;
+  --form-bg-color: #f9f9f9;
+  --input-bg-color: #ffffff;
+  --button-nav-bg-color: #95a5a6;
+  --button-nav-hover-bg-color: #7f8c8d;
+  --selected-row-bg-color: #e0e0e0;
 }
 
+/* Dark theme variables */
+/* ダークテーマの変数 */
+[data-theme="dark"] {
+  --bg-color: #2c3e50;
+  --text-color: #ecf0f1;
+  --table-bg-color: #34495e;
+  --table-border-color: #7f8c8d;
+  --table-header-bg-color: #2c3e50;
+  --form-bg-color: #34495e;
+  --input-bg-color: #566573;
+  --button-nav-bg-color: #7f8c8d;
+  --button-nav-hover-bg-color: #95a5a6;
+  --selected-row-bg-color: #4a637c;
+}
+
+/* Basic body styling */
+/* 基本的なボディのスタイル */
+body {
+  font-family: sans-serif;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Grid layout for the main application sections */
+/* アプリケーションの主要セクションのグリッドレイアウト */
+.grid-container {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 45fr 55fr;
+  grid-template-rows: 1fr auto;
+  grid-template-areas:
+    "data graph"
+    "buttons buttons";
+  gap: 20px;
+  padding: 20px;
+  height: calc(100vh - 70px);
+}
+
+/* Styling for the data display area (table) */
+/* データ表示領域（テーブル）のスタイル */
+.grid-item.item-data {
+  grid-area: data;
+  overflow-y: auto;
+}
+
+/* Styling for the graph display area */
+/* グラフ表示領域のスタイル */
+.grid-item.item-graph {
+  grid-area: graph;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Container for individual charts */
+/* 個々のチャートのコンテナ */
+.chart-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* Navigation for charts (e.g., year selection) */
+/* チャートのナビゲーション（例：年選択） */
+.chart-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Styling for the button area */
+/* ボタン領域のスタイル */
+.grid-item.item-buttons {
+  grid-area: buttons;
+}
+
+/* Heading styles */
+/* 見出しのスタイル */
 h1,
 h2 {
   text-align: center;
 }
 
+/* Table styling */
 /* テーブルのスタイル */
 #budget-book-table {
-  width: 80%; /* 幅を調整 */
-  margin: 20px auto; /* 中央寄せ */
-  border-collapse: collapse; /* ボーダーを重ねる */
-  border: 1px solid #ccc; /* 外枠 */
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--table-border-color);
+  background-color: var(--table-bg-color);
 }
 
+/* Table header and cell styling */
+/* テーブルヘッダーとセルのスタイル */
 #budget-book-table th,
 #budget-book-table td {
-  border: 1px solid #ccc; /* セルの罫線 */
-  padding: 10px; /* セル内の余白 */
-  text-align: center; /* 中央揃え */
+  border: 1px solid var(--table-border-color);
+  padding: 8px;
+  text-align: left; /* 左揃えに */
+  padding-left: 15px;
+  width: auto; /* 内容に応じて幅を自動調整 */
+  white-space: nowrap; /* 内容が改行されないようにする */
 }
 
+/* Table header specific styling */
+/* テーブルヘッダー固有のスタイル */
 #budget-book-table th {
-  background-color: #f2f2f2; /* ヘッダーの背景色 */
+  background-color: var(--table-header-bg-color);
 }
 
-/* ボタンコンテナ */
+/* Table row styling */
+/* テーブル行のスタイル */
+#budget-book-table tr {
+    position: relative; /* ボタン配置の基準 */
+}
+
+/* Styling for selected table rows */
+/* 選択されたテーブル行のスタイル */
+#budget-book-table tr.selected-row {
+    background-color: var(--selected-row-bg-color);
+}
+
+
+
+/* Container for action buttons */
+/* アクションボタンのコンテナ */
 .button-container {
-  text-align: center; /* ボタンを中央寄せ */
-  margin-top: 20px;
-  margin-bottom: 30px;
+  text-align: center;
 }
 
-/* ボタン共通スタイル */
+/* General button styling */
+/* 一般的なボタンのスタイル */
 .btn {
   padding: 10px 20px;
   border: none;
-  border-radius: 8px; /* 角丸 */
+  border-radius: 8px;
   color: white;
   cursor: pointer;
   font-size: 16px;
-  margin: 0 10px; /* ボタン間の余白 */
+  margin: 0 10px;
 }
 
-/* 追加ボタン */
+/* Add button specific styling */
+/* 追加ボタン固有のスタイル */
 .btn-add {
-  background-color: #3498db; /* 青色系 */
+  background-color: #3498db;
 }
 .btn-add:hover {
   background-color: #2980b9;
 }
 
-/* 保存ボタン */
+/* Save button specific styling */
+/* 保存ボタン固有のスタイル */
 .btn-save {
-  background-color: #2ecc71; /* 緑色系 */
+  background-color: #2ecc71;
 }
 .btn-save:hover {
   background-color: #27ae60;
 }
 
-/* フォームコンテナ */
-.form-container {
-  width: 80%; /* 幅を調整 */
-  max-width: 400px; /* 最大幅 */
-  margin: 20px auto; /* 中央寄せ */
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 影 */
+/* Navigation button specific styling */
+/* ナビゲーションボタン固有のスタイル */
+.btn-nav {
+  background-color: var(--button-nav-bg-color);
 }
 
-/* フォームグループ */
+.btn-nav:hover {
+  background-color: var(--button-nav-hover-bg-color);
+}
+
+/* Form container styling */
+/* フォームコンテナのスタイル */
+.form-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 400px;
+  padding: 20px;
+  border: 1px solid var(--table-border-color);
+  border-radius: 8px;
+  background-color: var(--form-bg-color);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+/* Form group styling */
+/* フォームグループのスタイル */
 .form-group {
   margin-bottom: 15px;
 }
 
+/* Form group label styling */
+/* フォームグループのラベルスタイル */
 .form-group label {
-  display: block; /* ラベルをブロック要素に */
+  display: block;
   margin-bottom: 5px;
   font-weight: bold;
 }
 
+/* Form input styling (date and number) */
+/* フォーム入力（日付と数値）のスタイル */
 .form-group input[type="date"],
 .form-group input[type="number"] {
-  width: calc(100% - 22px); /* paddingを考慮 */
+  width: calc(100% - 22px);
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--table-border-color);
   border-radius: 4px;
+  background-color: var(--input-bg-color);
+  color: var(--text-color);
+  color-scheme: dark light; /* ブラウザのUI（カレンダー等）のテーマを制御 */
 }
 
+/* Radio button styling */
+/* ラジオボタンのスタイル */
 .form-group input[type="radio"] {
   margin-right: 5px;
 }
 .form-group label[for="income"],
 .form-group label[for="expense"] {
-  display: inline-block; /* ラジオボタンのラベルをインラインに */
+  display: inline-block;
   margin-right: 15px;
   font-weight: normal;
 }
 
-/* フォーム内ボタン */
+/* Form button container styling */
+/* フォームボタンコンテナのスタイル */
 .form-buttons {
-  text-align: right; /* ボタンを右寄せ */
+  text-align: right;
   margin-top: 20px;
 }
 
+/* Submit button styling */
+/* 送信ボタンのスタイル */
 .btn-submit {
   background-color: #007bff;
 }
@@ -115,6 +262,8 @@ h2 {
   background-color: #0056b3;
 }
 
+/* Cancel button styling */
+/* キャンセルボタンのスタイル */
 .btn-cancel {
   background-color: #dc3545;
 }
@@ -122,7 +271,91 @@ h2 {
   background-color: #c82333;
 }
 
-/* 非表示用クラス */
+/* Hidden element utility class */
+/* 非表示要素のユーティリティクラス */
 .hidden {
   display: none;
+}
+
+
+
+.btn-edit {
+  background-color: #f39c12;
+}
+.btn-edit:hover {
+  background-color: #e67e22;
+}
+
+.btn-delete {
+  background-color: #e74c3c;
+}
+.btn-delete:hover {
+  background-color: #c0392b;
+}
+
+/* Flatpickr dark mode styles */
+/* Flatpickrのダークモードスタイル */
+.flatpickr-calendar.flatpickr-dark {
+  background: var(--form-bg-color);
+  border-color: var(--table-border-color);
+}
+.flatpickr-calendar.flatpickr-dark .flatpickr-day {
+  color: var(--text-color);
+}
+.flatpickr-calendar.flatpickr-dark .flatpickr-day.selected,
+.flatpickr-calendar.flatpickr-dark .flatpickr-day.selected:hover {
+  background: #3498db;
+  border-color: #3498db;
+}
+.flatpickr-calendar.flatpickr-dark .flatpickr-day.today:not(.selected) {
+  border-color: #3498db;
+}
+.flatpickr-calendar.flatpickr-dark .flatpickr-day.today:not(.selected):hover {
+  background: #3498db;
+  color: white;
+}
+.flatpickr-calendar.flatpickr-dark .flatpickr-day.flatpickr-disabled,
+.flatpickr-calendar.flatpickr-dark .flatpickr-day.flatpickr-disabled:hover {
+  color: #7f8c8d;
+}
+.flatpickr-calendar.flatpickr-dark .flatpickr-current-month .flatpickr-monthTitle,
+.flatpickr-calendar.flatpickr-dark .flatpickr-current-month .flatpickr-year {
+  color: var(--text-color);
+}
+.flatpickr-calendar.flatpickr-dark .flatpickr-months .flatpickr-prev-month,
+.flatpickr-calendar.flatpickr-dark .flatpickr-months .flatpickr-next-month {
+  color: var(--text-color);
+}
+
+.flatpickr-calendar.flatpickr-dark .flatpickr-month {
+  background: var(--form-bg-color);
+}
+
+.flatpickr-calendar.flatpickr-dark .flatpickr-current-month .flatpickr-monthDropdown-months {
+  background: var(--form-bg-color);
+  color: var(--text-color);
+}
+
+.flatpickr-calendar.flatpickr-dark .flatpickr-current-month .flatpickr-monthDropdown-months .flatpickr-monthItem {
+  color: var(--text-color);
+}
+
+.flatpickr-calendar.flatpickr-dark .flatpickr-current-month .flatpickr-monthDropdown-months .flatpickr-monthItem.selected,
+.flatpickr-calendar.flatpickr-dark .flatpickr-current-month .flatpickr-monthDropdown-months .flatpickr-monthItem:hover {
+  background: var(--selected-row-bg-color);
+}
+
+.flatpickr-calendar.flatpickr-dark .flatpickr-months .flatpickr-prev-month svg,
+.flatpickr-calendar.flatpickr-dark .flatpickr-months .flatpickr-next-month svg {
+  fill: var(--text-color);
+}
+.flatpickr-calendar.flatpickr-dark .flatpickr-weekdaycontainer {
+  border-bottom: 1px solid var(--table-border-color);
+}
+.flatpickr-calendar.flatpickr-dark .flatpickr-weekday {
+  color: var(--text-color);
+}
+.flatpickr-calendar.flatpickr-dark .flatpickr-input {
+  color: var(--text-color);
+  background: var(--input-bg-color);
 }

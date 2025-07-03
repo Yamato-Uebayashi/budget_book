@@ -1,4 +1,3 @@
-use base64::{engine::general_purpose::STANDARD, Engine}; // updated import
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 use std::fs::{self, create_dir_all};
